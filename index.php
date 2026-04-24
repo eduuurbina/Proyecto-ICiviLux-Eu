@@ -1,3 +1,7 @@
+<?php
+session_start();
+$usuarioSesion = trim((string)($_SESSION['usuario'] ?? ''));
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,7 +13,14 @@
 
 <body>
   <div class="header">
-    <a href="login.php" class="login-btn">Iniciar sesión</a>
+    <?php if ($usuarioSesion !== ''): ?>
+      <div class="session-box">
+        <span class="user-badge">Hola, <?= htmlspecialchars($usuarioSesion) ?></span>
+        <a href="logout.php" class="logout-btn">Salir</a>
+      </div>
+    <?php else: ?>
+      <a href="login.php" class="login-btn">Iniciar sesión</a>
+    <?php endif; ?>
     <img src="img/logoICiviLux.jpeg" class="logo">
   </div>
 

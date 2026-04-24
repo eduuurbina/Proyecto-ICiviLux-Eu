@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+$error = isset($_GET['error']);
+$registroOk = isset($_GET['registro']) && $_GET['registro'] === 'ok';
 ?>
 
 <!DOCTYPE html>
@@ -97,6 +100,38 @@ button:hover{
     color:#adb5bd;
 }
 
+.alert{
+    margin-top:12px;
+    padding:10px 12px;
+    border-radius:6px;
+    font-size:14px;
+}
+
+.alert-error{
+    background:#ffe3e3;
+    border:1px solid #e28787;
+    color:#8c2424;
+}
+
+.alert-success{
+    background:#dff5e6;
+    border:1px solid #74bf8b;
+    color:#1f6a36;
+}
+
+.register-link{
+    display:block;
+    margin-top:14px;
+    text-align:center;
+    color:#0056b3;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.register-link:hover{
+    text-decoration:underline;
+}
+
 </style>
 </head>
 
@@ -110,6 +145,14 @@ button:hover{
 <p class="tagline">Panel de Administración</p>
 </div>
 
+<?php if ($error): ?>
+<div class="alert alert-error">Usuario o contraseña incorrectos.</div>
+<?php endif; ?>
+
+<?php if ($registroOk): ?>
+<div class="alert alert-success">Usuario registrado correctamente. Ya puedes iniciar sesión.</div>
+<?php endif; ?>
+
 <form action="validar.php" method="POST">
 
 <label>Usuario</label>
@@ -121,6 +164,8 @@ button:hover{
 <button type="submit">Ingresar</button>
 
 </form>
+
+<a class="register-link" href="registro.php">Crear una cuenta</a>
 
 <div class="footer">
 © 2026 ICiviLux Eu

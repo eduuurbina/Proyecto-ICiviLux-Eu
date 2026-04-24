@@ -1,55 +1,6 @@
+<?php require_once 'solicitar_logica.php'; ?>
 <?php
-$servicios = [
-  1 => 'Remodelaciones y acabados',
-  2 => 'Carpintería y ebanistería',
-  3 => 'Servicios de electricidad',
-  4 => 'Plomería hidrosanitaria',
-  5 => 'Mantenimientos locativos'
-];
-
-$servicioSeleccionado = isset($_GET['servicio']) ? (int)$_GET['servicio'] : 0;
-$success = false;
-$error = null;
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $nombre = trim((string)($_POST['nombre'] ?? ''));
-  $correo = trim((string)($_POST['correo'] ?? ''));
-  $celular = trim((string)($_POST['celular'] ?? ''));
-  $servicioId = (int)($_POST['servicio'] ?? 0);
-
-  if ($nombre === '' || $correo === '' || $celular === '' || !isset($servicios[$servicioId])) {
-    $error = 'Por favor complete todos los campos correctamente.';
-  } else {
-    $servicioNombre = $servicios[$servicioId];
-
-    $host = 'localhost';
-    $user = 'root';
-    $pass = '';
-    $db = 'icivilux_db';
-
-    try {
-      $conexion = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
-      $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $sql = 'INSERT INTO contactos (nombre_cliente, correo, celular, servicio_interes)
-              VALUES (:nom, :cor, :cel, :ser)';
-      $stmt = $conexion->prepare($sql);
-      $stmt->bindParam(':nom', $nombre);
-      $stmt->bindParam(':cor', $correo);
-      $stmt->bindParam(':cel', $celular);
-      $stmt->bindParam(':ser', $servicioNombre);
-
-      $success = $stmt->execute();
-      if ($success) {
-        $servicioSeleccionado = $servicioId;
-      } else {
-        $error = 'No se pudo guardar la solicitud. Intente nuevamente.';
-      }
-    } catch (PDOException $e) {
-      $error = 'Error en el sistema: ' . $e->getMessage();
-    }
-  }
-}
+$usuarioSesion = trim((string)($_SESSION['usuario'] ?? ''));
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -57,12 +8,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Solicitar servicio | ICiviLux Eu</title>
-  <link rel="stylesheet" href="index-style.css">
+  <link rel="stylesheet" href="solicitar.css">
 </head>
 
 <body>
   <div class="header">
-    <a href="login.php" class="login-btn">Iniciar sesión</a>
+    <?php if ($usuarioSesion !== ''): ?>
+      <div class="session-box">
+        <span class="user-badge">Hola, <?= htmlspecialchars($usuarioSesion) ?></span>
+        <a href="logout.php" class="logout-btn">Salir</a>
+      </div>
+    <?php else: ?>
+      <a href="login.php" class="login-btn">Iniciar sesión</a>
+    <?php endif; ?>
     <a href="index.php"><img src="img/logoICiviLux.jpeg" class="logo"></a>
   </div>
 
@@ -105,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       <div class="form-group">
         <label for="celular">Celular</label>
-        <input type="tel" id="celular" name="celular" placeholder="300 123 4567" value="<?= htmlspecialchars((string)($_POST['celular'] ?? '')) ?>" required>
+        <input type="number" id="celular" name="celular" placeholder="300 123 4567" value="<?= htmlspecialchars((string)($_POST['celular'] ?? '')) ?>" required>
       </div>
 
       <button type="submit" class="btn-enviar">Enviar solicitud</button>

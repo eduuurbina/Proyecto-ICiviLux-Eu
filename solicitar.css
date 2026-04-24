@@ -4,8 +4,6 @@ body{
   background:#f5f5f5;
 }
 
-/* HEADER */
-
 .header{
   background:#d4a63a;
   padding:20px;
@@ -22,7 +20,7 @@ body{
   right:20px;
   top:20px;
   background:#000;
-  color:white;
+  color:#fff;
   padding:10px 18px;
   text-decoration:none;
   border-radius:6px;
@@ -59,80 +57,12 @@ body{
   background:#0b5ed7;
 }
 
-/* SERVICIOS */
-
 .container{
   width:90%;
   max-width:1100px;
   margin:auto;
   margin-top:40px;
 }
-
-.service{
-  display:flex;
-  align-items:center;
-  background:#e8e2d7;
-  margin-bottom:30px;
-  border-radius:6px;
-  overflow:hidden;
-  box-shadow:0 6px 20px rgba(0,0,0,0.1);
-}
-
-.service img{
-  width:250px;
-  height:200px;
-  object-fit:cover;
-}
-
-.service-content{
-  padding:25px;
-}
-
-.service h2{
-  margin-top:0;
-  color:#2d2d2d;
-  letter-spacing:1px;
-}
-
-.service p{
-  color:#555;
-  line-height:1.5;
-}
-
-.btn-solicitar{
-  display:inline-block;
-  margin-top:15px;
-  background:#d4a63a;
-  color:#000;
-  padding:10px 20px;
-  text-decoration:none;
-  border-radius:6px;
-  font-weight:600;
-  font-size:14px;
-  transition:background 0.2s;
-}
-
-.btn-solicitar:hover{
-  background:#c4952e;
-}
-
-/* alternar imagen */
-
-.service.reverse{
-  flex-direction:row-reverse;
-}
-
-/* FOOTER */
-
-.footer{
-  background:#111;
-  color:white;
-  text-align:center;
-  padding:25px;
-  margin-top:40px;
-}
-
-/* FORMULARIO SOLICITUD */
 
 .form-container{
   padding:40px 0;
@@ -245,4 +175,12 @@ body{
   background:#ffe0e0;
   border:1px solid #e07b7b;
   color:#7a1f1f;
+}
+
+.footer{
+  background:#111;
+  color:#fff;
+  text-align:center;
+  padding:25px;
+  margin-top:40px;
 }
